@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="Pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>To Do List</title>
+        
+        <style>
+            h1, label{
+                text-transform: capitalize;
+            }
+            body{
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            #quadro{
+                max-width: 450px;
+                background-color: gray;
+                border-radius: 10px;
+                text-align: center;
+                justify-content: center;
+                box-shadow: 0px 0px 10px black;
+                padding: 20px
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <section id="quadro">
+            <h1>To Do List</h1>
+
+            <div id="add-tarefa">
+                <label for="tarefa">Nova tarefa:</label>
+                <input type="text" id="tarefa">
+                <input type="button" value="Adicionar" onclick="adicionar()">
+            </div>
+
+            <div id="lista"></div>
+        </section>
+
+        <script>
+            var lista_to_do = new Array()
+
+            function add_to_do(tarefa){
+                lista_to_do.push(tarefa)
+            }
+
+            function feito(id){
+                lista_to_do.splice(id,1)
+                listar(lista_to_do)
+            }
+
+            function listar(lista_to_do){
+                document.getElementById("lista").innerHTML = ""
+
+                for (let i = 0; i < lista_to_do.length; i++) {
+                    let lista = document.createElement("div")
+                    lista.innerHTML = `${lista_to_do[i]} <input type="button" id="feito" value="Feito" onclick="feito(${i})">`
+                    let tarefas = document.getElementById("lista")
+                    tarefas.appendChild(lista)
+                }
+            }
+
+            function adicionar(){
+                let tarefa = document.getElementById("tarefa")
+
+                if(tarefa.value.length == 0){
+                    window.alert("Digite valor")
+                    tarefa.focus()
+                }else{ // Adiciona as tarefas na lista
+                    let tarefa = document.getElementById("tarefa").value
+                    add_to_do(tarefa)
+                    document.getElementById("tarefa").value = ""
+                    listar(lista_to_do)
+                }
+            }
+        </script>
+    </body>
+</html>
